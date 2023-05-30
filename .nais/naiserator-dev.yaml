@@ -1,0 +1,40 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sokos-bigquery-tilbakekreving
+  namespace: okonomi
+  labels:
+    "team": okonomi
+spec:
+  image: {{image}}
+  port: 8080
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 50
+  webproxy: true
+  envFrom:
+    - secret: t1-os-credentials
+    - secret: bigquery-credentials
+  filesFrom:
+    - secret: db2license
+
+  resources:
+    limits:
+      cpu: 3000m
+      memory: 32Gi
+    requests:
+      cpu: 3000m
+      memory: 32Gi
+  ingresses:
+    - https://sokos-bigquery-tilbakekreving.dev.intern.nav.no
+    - https://sokos-bigquery-tilbakekreving.dev-fss-pub.nais.io
+  env:
+    - name: DATABASE_HOST
+      value: "ztest.test.local"
+    - name: DATABASE_PORT
+      value: "5023"
+    - name: DATABASE_NAME
+      value: "TDB2"
+    - name: DATABASE_SCHEMA
+      value: "OS314T1"
