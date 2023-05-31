@@ -78,4 +78,5 @@ object PropertiesConfig {
     enum class Profile {
         LOCAL, DEV, PROD
     }
+
 }

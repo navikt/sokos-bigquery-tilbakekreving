@@ -10,7 +10,6 @@ on:
       - 'CODEOWNERS'
       - '.gitignore'
       - '.github/workflows/build-pr.yaml'
-
 jobs:
   bygg-test-push-image:
     permissions:
