@@ -38,3 +38,5 @@ spec:
       value: "TDB2"
     - name: DATABASE_SCHEMA
       value: "OS314T1"
+    - name: TEST_TABLE
+      value: "T_KJOREDATO"
