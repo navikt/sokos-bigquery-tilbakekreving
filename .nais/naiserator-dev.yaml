@@ -20,6 +20,8 @@ spec:
     - secret: db2license
 
   resources:
+    limits:
+      cpu: 3000m
     requests:
       cpu: 3000m
       memory: 32Gi
