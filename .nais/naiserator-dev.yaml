@@ -21,10 +21,10 @@ spec:
 
   resources:
     limits:
-      cpu: 3000m
+      memory: 32Gi
     requests:
       cpu: 3000m
-      memory: 32Gi
+      memory: 16Gi
   ingresses:
     - https://sokos-bigquery-tilbakekreving.dev.intern.nav.no
     - https://sokos-bigquery-tilbakekreving.dev-fss-pub.nais.io
