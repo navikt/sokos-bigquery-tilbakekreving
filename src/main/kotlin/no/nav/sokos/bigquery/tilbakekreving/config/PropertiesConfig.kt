@@ -27,7 +27,8 @@ object PropertiesConfig {
             "DATABASE_SCHEMA" to "schema",
             "OS_USERNAME" to "username",
             "OS_PASSWORD" to "password",
-            "GOOGLE_APPLICATION_CREDENTIALS" to "googleApplicationCredentials"
+            "GOOGLE_APPLICATION_CREDENTIALS" to "googleApplicationCredentials",
+            "HIKARI_TEST_TABLE" to "HIKARI_TEST_TABLE"
         )
     )
 
@@ -59,7 +60,7 @@ object PropertiesConfig {
         val schema: String = get("DATABASE_SCHEMA"),
         val username: String = get("OS_USERNAME"),
         val password: String = get("OS_PASSWORD"),
-        val testTable: String = get("TEST_TABLE")
+        val testTable: String = get("HIKARI_TEST_TABLE")
     )
 
     data class BigQueryConfig(

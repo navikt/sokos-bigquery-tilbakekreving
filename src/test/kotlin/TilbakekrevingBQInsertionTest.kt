@@ -1,4 +1,4 @@
-package no.nav.sokos.bigquery.venteregister.bqInsertion
+
 
 import com.google.cloud.bigquery.BigQuery
 import com.google.cloud.bigquery.QueryJobConfiguration

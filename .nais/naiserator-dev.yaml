@@ -20,9 +20,6 @@ spec:
     - secret: db2license
 
   resources:
-    limits:
-      cpu: 3000m
-      memory: 32Gi
     requests:
       cpu: 3000m
       memory: 32Gi
@@ -38,5 +35,5 @@ spec:
       value: "TDB2"
     - name: DATABASE_SCHEMA
       value: "OS314T1"
-    - name: TEST_TABLE
+    - name: HIKARI_TEST_TABLE
       value: "T_KJOREDATO"
