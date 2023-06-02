@@ -24,7 +24,7 @@ val bigQueryVersion = "2.24.5"
 
 val kotestVersion = "5.5.4"
 val mockkVersion = "1.13.4"
-val db2TestContainerVersion = "1.17.6"
+val db2TestContainerVersion = "1.18.3"
 
 val prometheusVersion = "1.10.4"
 val logbackVersion = "1.4.5"
