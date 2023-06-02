@@ -22,7 +22,7 @@ val hikaricpVersion = "5.0.1"
 val natpryceVersion = "1.6.10.0"
 val bigQueryVersion = "2.24.5"
 
-val kotestVersion = "5.5.4"
+val kotestVersion = "5.6.2"
 val mockkVersion = "1.13.4"
 val db2TestContainerVersion = "1.17.6"
 
