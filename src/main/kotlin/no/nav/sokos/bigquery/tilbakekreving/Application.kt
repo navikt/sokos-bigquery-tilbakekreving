@@ -10,7 +10,10 @@ import java.util.concurrent.TimeUnit
 
 
 fun main() {
-    HttpServer().start()
+    val db2DataSource: Db2DataSource = Db2DataSource()
+
+    DataFetcher(db2DataSource).fetch()
+   // HttpServer().start()
 }
 
 
