@@ -7,7 +7,7 @@ import com.google.cloud.bigquery.testing.RemoteBigQueryHelper
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldStartWith
-import no.nav.sokos.bigquery.tilbakekreving.service.DataFetcher
+import no.nav.sokos.bigquery.tilbakekreving.service.DataFetcherService
 import util.BigQueryTestUtils
 import util.DatabaseTestUtils
 import java.time.LocalDate
@@ -33,7 +33,7 @@ class DataFetcherTest: FunSpec ({
     }
 
     test("Alle tilbakekrevingene for dato skal insertes i bigquery") {
-        DataFetcher(db2DataSource, bqTilbakekrevingTable).fetch(startDate, endDate)
+        DataFetcherService(db2DataSource, bqTilbakekrevingTable).fetch(startDate, endDate)
 
         val query = "SELECT * FROM ${datasetID}.${tableName} ORDER BY ${bqTilbakekrevingTable.feilUtbetalingID} ASC"
         val queryConfig = QueryJobConfiguration.of(query)

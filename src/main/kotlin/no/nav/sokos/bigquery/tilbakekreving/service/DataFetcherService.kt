@@ -10,7 +10,7 @@ import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSObject
 import java.time.LocalDate
 import java.util.*
 
-class DataFetcher(
+class DataFetcherService(
     private val dataSource: Db2DataSource = Db2DataSource(),
     private val table: TilbakekrevingBQTable = TilbakekrevingBQTable(),
 ) {

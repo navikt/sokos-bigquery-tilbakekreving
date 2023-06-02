@@ -33,7 +33,7 @@ val janionVersion = "3.1.9"
 val kotlinLoggingVersion = "3.0.5"
 
 dependencies {
-    // For coroutines
+    // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     // Monitorering

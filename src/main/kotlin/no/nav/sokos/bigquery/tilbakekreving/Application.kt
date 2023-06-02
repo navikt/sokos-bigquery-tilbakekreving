@@ -1,7 +1,7 @@
 package no.nav.sokos.bigquery.tilbakekreving
 
-import no.nav.sokos.bigquery.tilbakekreving.service.DataFetcher
+import no.nav.sokos.bigquery.tilbakekreving.service.DataFetcherService
 
 fun main() {
-    DataFetcher().fetch()
+    DataFetcherService().fetch()
 }
