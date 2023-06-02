@@ -19,7 +19,7 @@ class BigQueryService(private val bigQuery: BigQuery = PropertiesConfig.Configur
     private val maxNumberOfRowsToInsert = 10_000
 
     fun insert(tilbakekrevinger: List<TilbakekrevingOSObject>, table: TilbakekrevingBQTable) {
-        val request = InsertAllRequest.newBuilder(table.datasetID, table.tableID)
+        val request = InsertAllRequest.newBuilder(table.datasetID, table.tableName)
         val sublists: List<List<TilbakekrevingOSObject>> = makeSublists(tilbakekrevinger)
 
         insertLists(sublists, request)
@@ -51,7 +51,7 @@ class BigQueryService(private val bigQuery: BigQuery = PropertiesConfig.Configur
         }
 
     fun getLastFetchedDate(table: TilbakekrevingBQTable): String {
-        val query = "SELECT max(${table.bqDatoHentet}) FROM `${table.datasetID}.${table.tableID}`"
+        val query = "SELECT max(${table.bqDatoHentet}) FROM `${table.datasetID}.${table.tableName}`"
         val queryConfig: QueryJobConfiguration = QueryJobConfiguration.of(query)
         return try {
             bigQuery.query(queryConfig).values.first().first().stringValue
@@ -76,10 +76,10 @@ class BigQueryService(private val bigQuery: BigQuery = PropertiesConfig.Configur
 
     private fun buildRows(list: List<TilbakekrevingOSObject>): List<InsertAllRequest.RowToInsert> =
         list.map { InsertAllRequest.RowToInsert.of(mapOSobjectsToBqTable(it)) }
+
     private fun mapOSobjectsToBqTable(osObj: TilbakekrevingOSObject): Map<String?, Any?> {
         val table = TilbakekrevingBQTable()
         return mapOf(
-            table.ID to "${osObj.feilUtbetalingID}--${osObj.tidspunktReg}",
             table.feilUtbetalingID to osObj.feilUtbetalingID,
             table.lopenr to osObj.lopenr,
             table.kodeStatusVedtak to osObj.kodeStatusVedtak,

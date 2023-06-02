@@ -49,11 +49,11 @@ object PropertiesConfig {
     data class Configuration(
         val naisAppName: String = get("NAIS_APP_NAME"),
         val profile: Profile = Profile.valueOf(this["APPLICATION_PROFILE"]),
-        val databaseConfig: OppdragZConfig = OppdragZConfig(),
+        val databaseConfig: DatabaseConfig = DatabaseConfig(),
         val bigQueryConfig: BigQueryConfig = BigQueryConfig()
     )
 
-    data class OppdragZConfig(
+    data class DatabaseConfig(
         val host: String = get("DATABASE_HOST"),
         val port: Int = get("DATABASE_PORT").toInt(),
         val name: String = get("DATABASE_NAME"),
@@ -78,5 +78,4 @@ object PropertiesConfig {
     enum class Profile {
         LOCAL, DEV, PROD
     }
-
 }

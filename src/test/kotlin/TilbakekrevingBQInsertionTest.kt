@@ -1,5 +1,3 @@
-
-
 import com.google.cloud.bigquery.BigQuery
 import com.google.cloud.bigquery.QueryJobConfiguration
 import com.google.cloud.bigquery.TableResult
@@ -19,7 +17,7 @@ internal class TilbakekrevingBQInsertionTest : FunSpec({
     val tableName = this::class.simpleName.toString()
     val bigQueryTestUtils = BigQueryTestUtils(tableName = tableName)
     val bqTilbakekrevingTabell = bigQueryTestUtils.createTilbakekrevingTabell()
-    val datasetName = bqTilbakekrevingTabell.datasetID
+    val datasetID = bqTilbakekrevingTabell.datasetID
 
     val bigQuery: BigQuery =
         bigQueryTestUtils.initBigQueryForTest(bigQueryTestUtils.createTilbakekrevingSchema(bqTilbakekrevingTabell))
@@ -28,7 +26,7 @@ internal class TilbakekrevingBQInsertionTest : FunSpec({
 
 
     afterEach {
-        RemoteBigQueryHelper.forceDelete(bigQuery, datasetName)
+        RemoteBigQueryHelper.forceDelete(bigQuery, datasetID)
     }
 
     test("Skal inserte alle rader i tabell") {
@@ -37,7 +35,7 @@ internal class TilbakekrevingBQInsertionTest : FunSpec({
 
         val query =
             QueryJobConfiguration
-                .newBuilder("SELECT * FROM ${datasetName}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
+                .newBuilder("SELECT * FROM ${datasetID}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
                 .build()
 
         val queryResponse: TableResult = bigQuery.query(query)

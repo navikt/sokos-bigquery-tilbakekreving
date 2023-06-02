@@ -17,14 +17,14 @@ object DatabaseTestUtils {
     private fun initContainer(
         initScriptPath: String,
         schemaName: String = "TEST_SCHEMA"
-    ): PropertiesConfig.OppdragZConfig {
+    ): PropertiesConfig.DatabaseConfig {
         container
             .apply {
                 withInitScript(initScriptPath)
                 acceptLicense()
                 start()
             }
-        return PropertiesConfig.OppdragZConfig(
+        return PropertiesConfig.DatabaseConfig(
             host = container.host,
             port = container.firstMappedPort,
             name = container.databaseName,

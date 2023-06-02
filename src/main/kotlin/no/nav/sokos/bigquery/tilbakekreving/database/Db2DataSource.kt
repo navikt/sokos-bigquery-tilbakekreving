@@ -9,7 +9,7 @@ import no.nav.sokos.bigquery.tilbakekreving.config.PropertiesConfig
 import java.sql.Connection
 
 class Db2DataSource(
-    private val dbConfig: PropertiesConfig.OppdragZConfig = PropertiesConfig.Configuration().databaseConfig,
+    private val dbConfig: PropertiesConfig.DatabaseConfig = PropertiesConfig.Configuration().databaseConfig,
 ) {
     private val dataSource: HikariDataSource = HikariDataSource(hikariConfig())
 
@@ -34,6 +34,5 @@ class Db2DataSource(
             user = dbConfig.username.trim()
             setPassword(dbConfig.password.trim())
         }
-
     }
 }

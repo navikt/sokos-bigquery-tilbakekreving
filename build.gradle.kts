@@ -1,7 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     kotlin("jvm") version "1.8.21"
@@ -18,8 +17,8 @@ repositories {
 }
 
 val ktorVersion = "2.2.3"
-val db2_jcc_version = "11.5.8.0"
-val hikaricp_version = "5.0.1"
+val db2JccVersion = "11.5.8.0"
+val hikaricpVersion = "5.0.1"
 val natpryceVersion = "1.6.10.0"
 val bigQueryVersion = "2.24.5"
 
@@ -34,21 +33,18 @@ val janionVersion = "3.1.9"
 val kotlinLoggingVersion = "3.0.5"
 
 dependencies {
-    // Ktor server
-    implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
+    // For coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     // Monitorering
-    implementation("io.ktor:ktor-server-metrics-micrometer-jvm:$ktorVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheusVersion")
 
     // Config
     implementation("com.natpryce:konfig:$natpryceVersion")
-    testImplementation(kotlin("test"))
 
     //Database
-    implementation("com.zaxxer:HikariCP:$hikaricp_version")
-    implementation("com.ibm.db2:jcc:$db2_jcc_version")
+    implementation("com.zaxxer:HikariCP:$hikaricpVersion")
+    implementation("com.ibm.db2:jcc:$db2JccVersion")
 
     //BigQuery
     implementation("com.google.cloud:google-cloud-bigquery:$bigQueryVersion")
@@ -62,25 +58,29 @@ dependencies {
     // Test
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
-    testImplementation("io.ktor:ktor-server-test-host-jvm:$ktorVersion")
-    testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.testcontainers:db2:$db2TestContainerVersion")
-    implementation(kotlin("stdlib-jdk8"))
+    testImplementation("io.mockk:mockk:$mockkVersion")
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
 }
 
 application {
     mainClass.set("no.nav.sokos.bigquery.tilbakekreving.ApplicationKt")
 }
 
-tasks {
-
-    withType<KotlinCompile>().configureEach {
-        compilerOptions.jvmTarget.set(JVM_17)
+sourceSets {
+    main {
+        java {
+            srcDirs("$buildDir/generated/src/main/kotlin")
+        }
     }
+}
+
+tasks {
 
     withType<ShadowJar>().configureEach {
         enabled = true
@@ -99,8 +99,10 @@ tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
         testLogging {
-            exceptionFormat = FULL
-            events("passed", "skipped", "failed")
+            showExceptions = true
+            showStackTraces = true
+            exceptionFormat = TestExceptionFormat.FULL
+            events = setOf(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         }
 
         maxParallelForks = Runtime.getRuntime().availableProcessors() / 2

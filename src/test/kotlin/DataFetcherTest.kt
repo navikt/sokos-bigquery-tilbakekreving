@@ -16,7 +16,7 @@ class DataFetcherTest: FunSpec ({
     val bigQueryTestUtils = BigQueryTestUtils(tableName = tableName)
 
     val bqTilbakekrevingTabell = bigQueryTestUtils.createTilbakekrevingTabell()
-    val datasetName = bqTilbakekrevingTabell.datasetID
+    val datasetID = bqTilbakekrevingTabell.datasetID
 
     val bigQuery: BigQuery =
         bigQueryTestUtils.initBigQueryForTest(bigQueryTestUtils.createTilbakekrevingSchema(bqTilbakekrevingTabell))
@@ -27,7 +27,7 @@ class DataFetcherTest: FunSpec ({
     val sluttDato = LocalDate.parse("2023-03-05")
 
     afterEach {
-        RemoteBigQueryHelper.forceDelete(bigQuery, datasetName)
+        RemoteBigQueryHelper.forceDelete(bigQuery, datasetID)
     }
 
     test("Alle tilbakekrevingene for dato skal insertes i bigquery") {
@@ -35,7 +35,7 @@ class DataFetcherTest: FunSpec ({
 
         val query =
             QueryJobConfiguration
-                .newBuilder("SELECT * FROM ${datasetName}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
+                .newBuilder("SELECT * FROM ${datasetID}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
                 .build()
 
         val queryResponse: TableResult = bigQuery.query(query)

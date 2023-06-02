@@ -11,7 +11,7 @@ import java.time.LocalDate
 import java.util.*
 
 class DataFetcher(
-    private val dataSource: Db2DataSource,
+    private val dataSource: Db2DataSource = Db2DataSource(),
     private val table: TilbakekrevingBQTable = TilbakekrevingBQTable(),
 ) {
     private val log: KLogger = KotlinLogging.logger {}

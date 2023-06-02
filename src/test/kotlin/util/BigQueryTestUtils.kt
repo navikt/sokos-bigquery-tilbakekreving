@@ -6,26 +6,25 @@ import no.nav.sokos.bigquery.tilbakekreving.config.PropertiesConfig
 import no.nav.sokos.bigquery.tilbakekreving.domain.bigquery.TilbakekrevingBQTable
 
 class BigQueryTestUtils(
-    val datasetName: String = RemoteBigQueryHelper.generateDatasetName(),
+    val datasetID: String = RemoteBigQueryHelper.generateDatasetName(),
     var tableName: String = "bq_test"
 ) {
-    private val datasetInfo: DatasetInfo = DatasetInfo.newBuilder(datasetName).setLocation("europe-north1").build()
+    private val datasetInfo: DatasetInfo = DatasetInfo.newBuilder(datasetID).setLocation("europe-north1").build()
 
     fun initBigQueryForTest(schema: Schema): BigQuery {
         val tableDefinition: TableDefinition = StandardTableDefinition.of(schema)
-        val tableInfo = TableInfo.newBuilder(TableId.of(datasetName, tableName), tableDefinition).build()
+        val tableInfo = TableInfo.newBuilder(TableId.of(datasetID, tableName), tableDefinition).build()
 
         return PropertiesConfig.BigQueryConfig().bigQuery.apply {
-            if (getDataset(datasetName) == null) create(datasetInfo)
+            if (getDataset(datasetID) == null) create(datasetInfo)
             create(tableInfo)
         }
     }
 
-    fun createTilbakekrevingTabell() = TilbakekrevingBQTable(datasetID = datasetName, tableID = tableName)
+    fun createTilbakekrevingTabell() = TilbakekrevingBQTable(datasetID = datasetID, tableName = tableName)
 
     fun createTilbakekrevingSchema(bq: TilbakekrevingBQTable): Schema =
         Schema.of(
-            Field.of(bq.ID, StandardSQLTypeName.STRING),
             Field.of(bq.feilUtbetalingID, StandardSQLTypeName.INT64),
             Field.of(bq.lopenr, StandardSQLTypeName.INT64),
             Field.of(bq.kodeStatusVedtak, StandardSQLTypeName.STRING),
