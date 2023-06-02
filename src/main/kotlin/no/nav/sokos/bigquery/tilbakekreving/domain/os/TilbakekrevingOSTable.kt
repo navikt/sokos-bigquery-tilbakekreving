@@ -1,6 +1,5 @@
 package no.nav.sokos.bigquery.tilbakekreving.domain.os
 
-val TBKRAV: TilbakekrevingOSTable = TilbakekrevingOSTable()
 
 data class TilbakekrevingOSTable(
     val name: String = "T7_VEDTAK_STATUS",

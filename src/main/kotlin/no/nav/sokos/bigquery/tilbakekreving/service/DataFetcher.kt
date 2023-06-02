@@ -30,6 +30,7 @@ class DataFetcher(
         }
         log.info("Data fetch fullført med $totalRows rader kl  ${Calendar.getInstance().time}")
 
+        dataSource.close()
     }
     private fun getTilbakekrevinger(dato: String): List<TilbakekrevingOSObject> = dataSource.connection.use { con ->
         con.setAcceleration()

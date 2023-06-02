@@ -2,13 +2,13 @@ package no.nav.sokos.bigquery.tilbakekreving.database
 
 import mu.KotlinLogging
 import no.nav.sokos.bigquery.tilbakekreving.database.RepositoryExtensions.toTilbakekrevingOSObject
-import no.nav.sokos.bigquery.tilbakekreving.domain.os.TBKRAV
 import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSObject
+import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSTable
 import java.sql.Connection
 
 object OSRepository {
     private val log = KotlinLogging.logger {}
-
+    private val TBKRAV: TilbakekrevingOSTable = TilbakekrevingOSTable()
     fun Connection.setAcceleration() {
         try {
             prepareStatement("SET CURRENT QUERY ACCELERATION ALL;").execute()

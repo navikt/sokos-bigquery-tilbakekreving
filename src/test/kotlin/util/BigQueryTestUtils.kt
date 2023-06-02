@@ -21,7 +21,7 @@ class BigQueryTestUtils(
         }
     }
 
-    fun createTilbakekrevingTabell() = TilbakekrevingBQTable(datasetID = datasetID, tableName = tableName)
+    fun createTilbakekrevingTable() = TilbakekrevingBQTable(datasetID = datasetID, tableName = tableName)
 
     fun createTilbakekrevingSchema(bq: TilbakekrevingBQTable): Schema =
         Schema.of(

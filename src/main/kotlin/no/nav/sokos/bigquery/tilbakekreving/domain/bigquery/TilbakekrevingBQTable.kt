@@ -5,7 +5,7 @@ import java.time.LocalDate
 data class TilbakekrevingBQTable(
     val ID: String = "ID",
     val datasetID: String = "Tilbakekreving",
-    val tableName: String = "TEST_TILBAKEKREVING",
+    val tableName: String = "POU_TILBAKEKREVING",
     val bqDatoHentet: String = "BQ_DATO_HENTET",
     val defBQSisteDatoHentet: LocalDate = LocalDate.of(2023, 1, 1),
     val feilUtbetalingID: String = "FEILUTB_ID",

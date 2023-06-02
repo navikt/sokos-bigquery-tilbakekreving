@@ -1,14 +1,29 @@
+package database
+
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.sokos.bigquery.tilbakekreving.database.RepositoryExtensions.toTilbakekrevingOSObject
-import no.nav.sokos.bigquery.tilbakekreving.domain.os.TBKRAV
+
 import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSObject
+import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSTable
 import java.sql.ResultSet
 
-internal class OSTilbakekrevingMappingTest : FunSpec({
+private val tKrav = TilbakekrevingOSObject(
+    feilUtbetalingID = 1,
+    lopenr = 9999,
+    kodeStatusVedtak = "BEAU",
+    brukerID = "MJAU123",
+    tidspunktReg = "2023-05-05",
+    kode = "kode",
+    melding = "melding",
+    ID=""
+)
+private val TBKRAV: TilbakekrevingOSTable = TilbakekrevingOSTable()
+internal class OSMappingTest : FunSpec({
     lateinit var resultSet: ResultSet
+
     beforeEach {
         resultSet = mockk<ResultSet>().apply {
             every { next() } returns true andThen false
@@ -34,14 +49,3 @@ internal class OSTilbakekrevingMappingTest : FunSpec({
         }
     }
 })
-
-private val tKrav = TilbakekrevingOSObject(
-    feilUtbetalingID = 1,
-    lopenr = 9999,
-    kodeStatusVedtak = "BEAU",
-    brukerID = "MJAU123",
-    tidspunktReg = "2023-05-05",
-    kode = "kode",
-    melding = "melding",
-    ID=""
-)

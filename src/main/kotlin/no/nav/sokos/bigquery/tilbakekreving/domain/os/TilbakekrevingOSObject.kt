@@ -1,6 +1,5 @@
 package no.nav.sokos.bigquery.tilbakekreving.domain.os
 
-
 data class TilbakekrevingOSObject(
     val feilUtbetalingID: Int?,
     val lopenr: Int?,

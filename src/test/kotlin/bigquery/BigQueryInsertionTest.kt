@@ -1,22 +1,24 @@
+package bigquery
+
+
 import com.google.cloud.bigquery.BigQuery
 import com.google.cloud.bigquery.QueryJobConfiguration
 import com.google.cloud.bigquery.TableResult
 import com.google.cloud.bigquery.testing.RemoteBigQueryHelper
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+
 import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSObject
 import no.nav.sokos.bigquery.tilbakekreving.service.BigQueryService
 import util.BigQueryTestUtils
 import java.time.LocalDate
 
-
 private const val NUMBER_OF_R0WS_TO_INSERT = 100_000
-
-internal class TilbakekrevingBQInsertionTest : FunSpec({
+internal class BigQueryInsertionTest : FunSpec({
 
     val tableName = this::class.simpleName.toString()
     val bigQueryTestUtils = BigQueryTestUtils(tableName = tableName)
-    val bqTilbakekrevingTabell = bigQueryTestUtils.createTilbakekrevingTabell()
+    val bqTilbakekrevingTabell = bigQueryTestUtils.createTilbakekrevingTable()
     val datasetID = bqTilbakekrevingTabell.datasetID
 
     val bigQuery: BigQuery =
@@ -30,12 +32,11 @@ internal class TilbakekrevingBQInsertionTest : FunSpec({
     }
 
     test("Skal inserte alle rader i tabell") {
-        val tKravList = lagTilbakeKreving()
+        val tKravList = makeTilbakeKreving()
         bigQueryService.insert(tKravList, bqTilbakekrevingTabell)
 
         val query =
-            QueryJobConfiguration
-                .newBuilder("SELECT * FROM ${datasetID}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
+            QueryJobConfiguration.newBuilder("SELECT * FROM ${datasetID}.${tableName} ORDER BY ${bqTilbakekrevingTabell.feilUtbetalingID} ASC")
                 .build()
 
         val queryResponse: TableResult = bigQuery.query(query)
@@ -52,7 +53,7 @@ internal class TilbakekrevingBQInsertionTest : FunSpec({
     }
 })
 
-private fun lagTilbakeKreving(): MutableList<TilbakekrevingOSObject> =
+private fun makeTilbakeKreving(): MutableList<TilbakekrevingOSObject> =
     mutableListOf<TilbakekrevingOSObject>().apply {
         (1..NUMBER_OF_R0WS_TO_INSERT).forEach {
             add(

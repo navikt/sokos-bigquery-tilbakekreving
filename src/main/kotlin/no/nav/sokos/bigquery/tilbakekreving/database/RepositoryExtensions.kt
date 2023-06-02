@@ -1,10 +1,12 @@
 package no.nav.sokos.bigquery.tilbakekreving.database
 
-import no.nav.sokos.bigquery.tilbakekreving.domain.os.TBKRAV
+
 import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSObject
+import no.nav.sokos.bigquery.tilbakekreving.domain.os.TilbakekrevingOSTable
 import java.sql.ResultSet
 
 object RepositoryExtensions {
+    private val TBKRAV: TilbakekrevingOSTable = TilbakekrevingOSTable()
     fun ResultSet.toTilbakekrevingOSObject() =
         toList {
             TilbakekrevingOSObject(
