@@ -16,23 +16,24 @@ class DataFetcher(
 ) {
     private val log: KLogger = KotlinLogging.logger {}
     private val bigQueryService: BigQueryService = BigQueryService()
-    fun fetch(from: LocalDate = getLastTimeFetchedDate(), to: LocalDate = LocalDate.now()){
+    private val lastTimeFetched: LocalDate = LocalDate.parse(bigQueryService.getLastFetchedDate(table))
+
+    fun fetch(from: LocalDate = lastTimeFetched, to: LocalDate = LocalDate.now()){
         var dateToFetch = from
-        var totalrows = 0
+        val totalRows = 0
 
         while (dateToFetch <= to) {
             val tilbakekrevinger = getTilbakekrevinger(dateToFetch.toString())
-
-           bigQueryService.insert(tilbakekrevinger, table)
-            totalrows += tilbakekrevinger.size
+            bigQueryService.insert(tilbakekrevinger, table)
+            totalRows.plus(tilbakekrevinger.size)
             dateToFetch = dateToFetch.plusDays(1)
         }
-        log.info("Data fetch fullført med $totalrows rader kl  ${Calendar.getInstance().time}")
+        log.info("Data fetch fullført med $totalRows rader kl  ${Calendar.getInstance().time}")
 
     }
     private fun getTilbakekrevinger(dato: String): List<TilbakekrevingOSObject> = dataSource.connection.use { con ->
         con.setAcceleration()
         return con.getTilbakekrevingerForDate(dato)
     }
-    private fun getLastTimeFetchedDate(): LocalDate = LocalDate.parse(bigQueryService.getLastFetchedDate(table))
+
 }
