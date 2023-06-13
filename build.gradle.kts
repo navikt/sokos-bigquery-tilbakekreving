@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     kotlin("jvm") version "1.8.21"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     application
 }
 
@@ -16,17 +16,17 @@ repositories {
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
-val ktorVersion = "2.2.3"
+
 val db2JccVersion = "11.5.8.0"
 val hikaricpVersion = "5.0.1"
 val natpryceVersion = "1.6.10.0"
-val bigQueryVersion = "2.27.0"
+val bigQueryVersion = "2.24.5"
 
 val kotestVersion = "5.6.2"
 val mockkVersion = "1.13.5"
 val db2TestContainerVersion = "1.18.3"
 
-val prometheusVersion = "1.11.0"
+val prometheusVersion = "1.10.4"
 val logbackVersion = "1.4.5"
 val logstashVersion = "7.3"
 val janionVersion = "3.1.9"
