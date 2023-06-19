@@ -28,7 +28,7 @@ val db2TestContainerVersion = "1.18.3"
 
 val prometheusVersion = "1.10.4"
 val logbackVersion = "1.4.5"
-val logstashVersion = "7.3"
+val logstashVersion = "7.4"
 val janionVersion = "3.1.9"
 val kotlinLoggingVersion = "3.0.5"
 
